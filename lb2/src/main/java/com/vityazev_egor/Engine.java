@@ -1,38 +1,41 @@
 package com.vityazev_egor;
 
 import com.vityazev_egor.Models.IGame;
-import java.util.*;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class Engine {
     private final IGame game;
 
     private String playerName;
-    private Scanner sc;
+    private BufferedReader input;
 
     public Engine(IGame game){
         this.game = game;
     }
 
-    public void runGame(){
+    public void runGame() throws IOException{
         init();
         runGameLoop();
         dispose();
     }
 
-    private void init(){
-        sc = new Scanner(System.in);
+    private void init() throws IOException{
+        input = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Welcome to the Brain Games!");
         System.err.println("May I have your name? ");
-        playerName = sc.nextLine();
+        playerName = input.readLine();
         System.out.println(String.format("Hello, %s!", playerName));
     }
 
-    private void runGameLoop(){
+    private void runGameLoop() throws IOException{
         System.out.println(game.getName());
         for (int i=0; i<3; i++){
             var question = game.genQuestion();
             System.out.println(question.getQuestion());
-            String playerAnswer = sc.nextLine();
+            String playerAnswer = input.readLine();
             if (playerAnswer.equalsIgnoreCase(question.getCorrectAnswer())){
                 System.out.println("Correct!");
             }
@@ -42,9 +45,8 @@ public class Engine {
         }
     }
 
-    private void dispose(){
-        sc.close();
-
+    private void dispose() throws IOException{
+        input.close();
     }
     
 }

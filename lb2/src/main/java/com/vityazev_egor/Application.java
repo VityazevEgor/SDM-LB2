@@ -1,16 +1,16 @@
 package com.vityazev_egor;
 
-import java.util.*;
-
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import com.vityazev_egor.Games.NOKGame;
 
 public class Application {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         printMathBookArt();
-        Scanner scanner = new Scanner(System.in);
-        int choice = scanner.nextInt();
-        scanner.close();
+        BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+        int choice = Integer.parseInt(input.readLine());
         
         switch (choice) {
             case 1:
@@ -21,6 +21,7 @@ public class Application {
             default:
                 System.out.println("Invalid choice. Please restart and select 1 or 2.");
         }
+        input.close();
     }
 
     private static void printMathBookArt() {

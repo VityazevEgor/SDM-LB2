@@ -17,24 +17,29 @@ public class NOKGame implements IGame {
     public Question genQuestion() {
         Set<Integer> values = new HashSet<>();
         while (values.size() != 3) {
-            values.add(r.nextInt(2,100));
+            values.add(r.nextInt(2,21));
         }
-        return new Question(values.toString(), findAsnwer(values).toString());
+        return new Question(values.toString(), findAnswer(values).toString());
     }
 
-    private Integer findAsnwer(Set<Integer> values){
+    private Integer findAnswer(Set<Integer> values) {
         Integer startValue = Collections.max(values);
-        for (Integer currentValue = startValue; currentValue<Integer.MAX_VALUE; currentValue++){
-            Boolean foundAnswer = true;
-            for (Integer value : values) {
-                if (currentValue % value != 0){
-                    foundAnswer = false;
-                    break;
-                }
+        
+        for (Integer currentValue = startValue; currentValue < Integer.MAX_VALUE; currentValue++) {
+            if (isCommonMultiple(currentValue, values)) {
+                return currentValue;
             }
-            if (foundAnswer) return currentValue;
         }
         return 0;
     }
+    
+    private Boolean isCommonMultiple(Integer currentValue, Set<Integer> values) {
+        for (Integer value : values) {
+            if (currentValue % value != 0) {
+                return false;
+            }
+        }
+        return true;
+    }    
     
 }
