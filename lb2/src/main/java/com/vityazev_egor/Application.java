@@ -9,6 +9,7 @@ import com.vityazev_egor.Games.ProgressionGame;
 public class Application {
 
     public static void main(String[] args) throws IOException {
+        parseArguments(args);
         printMathBookArt();
         BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
         int choice = Integer.parseInt(input.readLine());
@@ -24,6 +25,26 @@ public class Application {
                 System.out.println("Invalid choice. Please restart and select 1 or 2.");
         }
         input.close();
+    }
+
+    private static void parseArguments(String[] args){
+        for (int i=0; i<args.length; i++) {
+            switch (args[i]) {
+                case "--showAnswers":
+                    if (args.length-1>=i+1){
+                        Engine.showAnswers = Boolean.parseBoolean(args[i+1]);
+                        i++;
+                        System.out.println("Enabled 'showAnswers' mod");
+                    }
+                    else{
+                        System.out.println("You didn't provide value for '--showAnswers' argument");
+                    }
+                    break;
+            
+                default:
+                    break;
+            }
+        }
     }
 
     private static void printMathBookArt() {
