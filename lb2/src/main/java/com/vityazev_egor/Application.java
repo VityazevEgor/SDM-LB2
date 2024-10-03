@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import com.vityazev_egor.Games.NOKGame;
+import com.vityazev_egor.Games.ProgressionGame;
 
 public class Application {
 
@@ -17,6 +18,7 @@ public class Application {
                 new Engine(new NOKGame()).runGame();
                 break;
             case 2:
+                new Engine(new ProgressionGame()).runGame();
                 break;
             default:
                 System.out.println("Invalid choice. Please restart and select 1 or 2.");

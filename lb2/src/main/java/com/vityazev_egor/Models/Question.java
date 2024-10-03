@@ -9,5 +9,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Question {
     private String question;
-    private String correctAnswer;
+    private Integer correctAnswer;
+
+    public Boolean checkAnswer(String rawAnswer){
+        try{
+            Integer answer = Integer.parseInt(rawAnswer.replace(" ", ""));
+            return correctAnswer.equals(answer);
+        } catch (NumberFormatException e){
+            return false;
+        }
+    }
 }

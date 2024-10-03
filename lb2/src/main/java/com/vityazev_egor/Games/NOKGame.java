@@ -6,7 +6,7 @@ import com.vityazev_egor.Models.Question;
 import java.util.*;
 
 public class NOKGame implements IGame {
-    private final Random r = new Random();
+    private final Random random = new Random();
 
     @Override
     public String getName() {
@@ -17,9 +17,9 @@ public class NOKGame implements IGame {
     public Question genQuestion() {
         Set<Integer> values = new HashSet<>();
         while (values.size() != 3) {
-            values.add(r.nextInt(2,21));
+            values.add(random.nextInt(2,21));
         }
-        return new Question(values.toString(), findAnswer(values).toString());
+        return new Question(values.toString(), findAnswer(values));
     }
 
     private Integer findAnswer(Set<Integer> values) {

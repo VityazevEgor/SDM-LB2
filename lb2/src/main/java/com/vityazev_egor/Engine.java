@@ -36,7 +36,7 @@ public class Engine {
             var question = game.genQuestion();
             System.out.println(question.getQuestion());
             String playerAnswer = input.readLine();
-            if (playerAnswer.equalsIgnoreCase(question.getCorrectAnswer())){
+            if (question.checkAnswer(playerAnswer)){
                 System.out.println("Correct!");
             }
             else{
