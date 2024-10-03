@@ -1,15 +1,15 @@
 package com.vityazev_egor;
 
 import com.vityazev_egor.Models.IGame;
-
+import com.vityazev_egor.Models.Question;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Engine {
     private final IGame game;
-    private final String ANSI_RESET = "\u001B[0m";
-    private final String ANSI_GRAY = "\u001B[90m";
+    private final String ansiReset = "\u001B[0m";
+    private final String ansiGray = "\u001B[90m";
 
     private String playerName;
     private BufferedReader input;
@@ -35,28 +35,43 @@ public class Engine {
         System.out.println(String.format("Hello, %s!", playerName));
     }
 
-    private void runGameLoop() throws IOException{
+    private void runGameLoop() throws IOException {
         System.out.println(game.getName());
-        for (int i=0; i<3; i++){
-            var question = game.genQuestion();
-            System.out.println(question.getQuestion());
-            if (showAnswers){
-                printGrayText(question.getCorrectAnswer());
-            }
-            String playerAnswer = input.readLine();
-            if (question.checkAnswer(playerAnswer)){
-                System.out.println("Correct!");
-            }
-            else{
-                System.out.println(String.format("'%s' is wrong answer ;(. Correct answer was '%s'.", playerAnswer, question.getCorrectAnswer()));
-                hadWrongAnswer = true;
+        for (int i = 0; i < 3; i++) {
+            if (!processQuestion()) {
                 break;
             }
         }
     }
 
+    private Boolean processQuestion() throws IOException {
+        var question = game.genQuestion();
+        askQuestion(question);
+        if (showAnswers) {
+            printGrayText(question.getCorrectAnswer());
+        }
+        return checkAnswer(question);
+    }
+
+    private void askQuestion(Question question) {
+        System.out.println(question.getQuestion());
+    }
+
+    private Boolean checkAnswer(Question question) throws IOException {
+        String playerAnswer = input.readLine();
+        if (question.checkAnswer(playerAnswer)) {
+            System.out.println("Correct!");
+            return true;
+        } else {
+            System.out.println(String.format("'%s' is wrong answer ;(. Correct answer was '%s'.", playerAnswer, question.getCorrectAnswer()));
+            hadWrongAnswer = true;
+            return false;
+        }
+    }
+
+
     private void printGrayText(String text) {
-        System.out.println(ANSI_GRAY + text + ANSI_RESET);
+        System.out.println(ansiGray + text + ansiReset);
     }
 
     private void printGrayText(Integer value) {

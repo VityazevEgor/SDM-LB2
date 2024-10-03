@@ -2,8 +2,10 @@ package com.vityazev_egor.Games;
 
 import com.vityazev_egor.Models.IGame;
 import com.vityazev_egor.Models.Question;
-
-import java.util.*;
+import java.util.Set;
+import java.util.Random;
+import java.util.HashSet;
+import java.util.Collections;
 
 public class NOKGame implements IGame {
     private final Random random = new Random();

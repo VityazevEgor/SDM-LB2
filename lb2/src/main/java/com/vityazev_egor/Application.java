@@ -1,10 +1,11 @@
 package com.vityazev_egor;
 
+import com.vityazev_egor.Games.NOKGame;
+import com.vityazev_egor.Games.ProgressionGame;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import com.vityazev_egor.Games.NOKGame;
-import com.vityazev_egor.Games.ProgressionGame;
 
 public class Application {
 
@@ -27,25 +28,29 @@ public class Application {
         input.close();
     }
 
-    private static void parseArguments(String[] args){
-        for (int i=0; i<args.length; i++) {
-            switch (args[i]) {
-                case "--showAnswers":
-                    if (args.length-1>=i+1){
-                        Engine.showAnswers = Boolean.parseBoolean(args[i+1]);
-                        i++;
-                        System.out.println("Enabled 'showAnswers' mod");
-                    }
-                    else{
-                        System.out.println("You didn't provide value for '--showAnswers' argument");
-                    }
-                    break;
-            
-                default:
-                    break;
+    private static void parseArguments(String[] args) {
+        for (int i = 0; i < args.length; i++) {
+            if (isShowAnswersArgument(args[i])) {
+                i = handleShowAnswersArgument(args, i);
             }
         }
     }
+    
+    private static boolean isShowAnswersArgument(String arg) {
+        return "--showAnswers".equals(arg);
+    }
+    
+    private static int handleShowAnswersArgument(String[] args, int index) {
+        if (index + 1 < args.length) {
+            Engine.showAnswers = Boolean.parseBoolean(args[index + 1]);
+            System.out.println("Enabled 'showAnswers' mode");
+            return index + 1;
+        } else {
+            System.out.println("You didn't provide a value for '--showAnswers' argument");
+            return index;
+        }
+    }
+    
 
     private static void printMathBookArt() {
         System.out.println("====================");

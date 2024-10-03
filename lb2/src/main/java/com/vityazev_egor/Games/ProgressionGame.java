@@ -1,18 +1,18 @@
 package com.vityazev_egor.Games;
 
+import com.vityazev_egor.Models.IGame;
+import com.vityazev_egor.Models.Question;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import com.vityazev_egor.Models.IGame;
-import com.vityazev_egor.Models.Question;
 
 public class ProgressionGame implements IGame {
 
-    private final Integer MAX_START_VALUE = 5;
-    private final Integer MIN_COEFFICIENT = 2;
-    private final Integer MAX_COEFFICIENT = 5;
-    private final Integer PROGRESSION_LENGTH = 8;
-    private final Integer BREAK_VALUE = 20000;
+    private final Integer maxStartValue = 5;
+    private final Integer minCoef = 2;
+    private final Integer maxCoef = 5;
+    private final Integer progressionLength = 8;
+    private final Integer breakValue = 20000;
 
     private final Random random = new Random();
 
@@ -23,7 +23,7 @@ public class ProgressionGame implements IGame {
 
     @Override
     public Question genQuestion() {
-        var koef = random.nextInt(MIN_COEFFICIENT, MAX_COEFFICIENT + 1);
+        var koef = random.nextInt(minCoef, maxCoef + 1);
         var progression = generateProgression(koef);
 
         var answerIndex = selectAnswerIndex(progression);
@@ -40,11 +40,11 @@ public class ProgressionGame implements IGame {
 
     private List<Integer> generateProgression(int koef) {
         var progression = new ArrayList<Integer>();
-        progression.add(random.nextInt(1, MAX_START_VALUE + 1));
+        progression.add(random.nextInt(1, maxStartValue + 1));
 
-        for (int i = 1; i < PROGRESSION_LENGTH; i++) {
+        for (int i = 1; i < progressionLength; i++) {
             var nextValue = progression.get(i - 1) * koef;
-            if (nextValue >= BREAK_VALUE) {
+            if (nextValue >= breakValue) {
                 break;
             }
             progression.add(nextValue);
